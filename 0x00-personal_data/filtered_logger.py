@@ -7,6 +7,5 @@ import re
 def filter_datum(fields, redaction, message, separator):
     """ filter_datum """
     for field in fields:
-        message = re.sub(field + f".*?{separator}",
-                         field + "=" + redaction, message)
+        message = re.sub(field + f".*?{separator}", field + "=" + redaction, message)
     return message
