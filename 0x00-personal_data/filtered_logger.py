@@ -40,7 +40,7 @@ class RedactingFormatter(logging.Formatter):
                             super().format(record), self.SEPARATOR)
 
 
-def get_logger():
+def get_logger()-> logging.Logger:
     "get logger"
     logger = logging.getLogger("user_data")
     logger.setLevel(logging.INFO)
