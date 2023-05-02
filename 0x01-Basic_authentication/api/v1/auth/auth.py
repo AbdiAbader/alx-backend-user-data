@@ -15,10 +15,11 @@ class Auth():
             return True
         if path in excluded_paths:
             return False
-        for path in excluded_paths:
-            if path.endswith('/') and path[:-1] == path:
+        for paths in excluded_paths:
+            if paths.endswith('/') and path == paths[:-1]:
                 return False
-        return True
+            return True
+
 
     def authorization_header(self, request=None) -> str:
         """authorization head"""
