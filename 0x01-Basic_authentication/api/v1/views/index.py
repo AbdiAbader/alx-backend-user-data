@@ -31,3 +31,9 @@ def non_auth() -> str:
     """ endpoint for unauthorized error
     """
     abort(401, description="You are not authorized")
+
+
+@app_views.route('/forbidden/', strict_slashes=False)
+def forbidden() -> str:
+    """endpoint for forbidden"""
+    abort(403, description="you are no allowed to access")
