@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """BasicAuth class that inherits from Auth"""
+
 from api.v1.auth.auth import Auth
 import base64
-from typing import TypeVar, str, Union
+from typing import TypeVar, Union
+
 
 class BasicAuth(Auth):
     """BasicAuth class that inherits
