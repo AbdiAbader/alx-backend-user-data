@@ -30,7 +30,7 @@ def before_req():
     """Before request"""
     if auth is None:
         return
-    path_check = ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/']
+    path_check = ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/', '/api/v1/auth_session/login/']
     if request.path not in path_check:
         if auth.require_auth(request.path, path_check):
             if auth.authorization_header(request) is None:
