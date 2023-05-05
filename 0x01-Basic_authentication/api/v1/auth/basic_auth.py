@@ -2,7 +2,7 @@
 """BasicAuth class that inherits from Auth"""
 from api.v1.auth.auth import Auth
 import base64
-from typing import TypeVar, str
+from typing import TypeVar, str, Union
 
 class BasicAuth(Auth):
     """BasicAuth class that inherits
@@ -27,7 +27,7 @@ class BasicAuth(Auth):
         except:
             return None
         
-    def extract_user_credentials(self, decoded_base64_authorization_header: str) -> (str, str):
+    def extract_user_credentials(self, decoded_base64_authorization_header: str) -> Union(str, str):
         """returns the user email and password"""
         if decoded_base64_authorization_header is None or type(decoded_base64_authorization_header) is not str:
             return None, None
