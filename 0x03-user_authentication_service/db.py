@@ -9,6 +9,10 @@ from sqlalchemy.orm.session import Session
 from user import Base, User
 
 
+class UserExeption(Exception):
+    pass
+
+
 class DB:
     """DB class
     """
@@ -39,4 +43,7 @@ class DB:
     
     def find_user_by(self, **kwargs) -> User:
         """method that return the first row found in the users table"""
-        return self._session.query(User).filter_by(**kwargs).first()
+        user = self._session.query(User).filter_by(**kwargs).first()
+        if not user:
+            raise UserExeption("Not found")
+        return user
