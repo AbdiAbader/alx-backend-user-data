@@ -31,10 +31,9 @@ class DB:
             self.__session = DBSession()
         return self.__session
     
-    def add_user(self, email: str, hashed_password: str) -> User:
-        """method that return a new user"""
-        newUser = User(email=email, hashed_password=hashed_password)
-        self._session.add(newUser)
+    def add_user(self, email: str, hashed_password: str):
+        """Method that saves a new user to the database"""
+        new_user = User(email=email, hashed_password=hashed_password)
+        self._session.add(new_user)
         self._session.commit()
-        return newUser
-    
+        return new_user
