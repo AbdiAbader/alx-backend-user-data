@@ -6,8 +6,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 
-from user import Base
-from user import User
+from user import Base, User
 
 
 class DB:
@@ -37,3 +36,7 @@ class DB:
         self._session.add(newUser)
         self._session.commit()
         return newUser
+    
+    def find_user_by(self, **kwargs) -> User:
+        """method that return the first row found in the users table"""
+        return self._session.query(User).filter_by(**kwargs).first()
