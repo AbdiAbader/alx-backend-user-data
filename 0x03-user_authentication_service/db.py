@@ -33,28 +33,10 @@ class DB:
         return self.__session
 
     def add_user(self, email: str, hashed_password: str) -> User:
-        """method that return a new user"""
+        """method that return a new user
+        """
         newUser = User(email=email, hashed_password=hashed_password)
         self._session.add(newUser)
         self._session.commit()
         return newUser
-
-    def find_user_by(self, **kwargs) -> User:
-        """method that return the first row found in the users table"""
-        try:
-            user = self._session.query(User).filter_by(**kwargs).first()
-        except (TypeError, InvalidRequestError):
-            raise InvalidRequestError
-        if user is None:
-            raise NoResultFound
-        return user
-    
-    def update_user(self, user_id: int, **args) -> None:
-        """update user """
-        user = self.find_user_by(id=user_id)
-        for key, value in args.items():
-            if key not in user.__dict__:
-                raise ValueError
-            setattr(user, key, value)
-        self._session.commit()
 
