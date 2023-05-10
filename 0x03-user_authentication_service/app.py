@@ -44,6 +44,7 @@ def login() -> str:
     else:
         abort(401)
 
+
 @app.route('/sessions', methods=['DELETE'], strict_slashes=False)
 def logout() -> str:
     """destory user session"""
