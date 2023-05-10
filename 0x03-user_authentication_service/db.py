@@ -35,10 +35,8 @@ class DB:
     def add_user(self, email: str, hashed_password: str) -> User:
         """method that return a new user
         """
-        try:
-            new_user = User(email=email, hashed_password=hashed_password)
-            self._session.add(new_user)
-            self._session.commit()
-            return new_user
-        except Exception:
-            return None
+        newUser = User(email=email, hashed_password=hashed_password)
+        self._session.add(newUser)
+        self._session.commit()
+        return newUser
+
