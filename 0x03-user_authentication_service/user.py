@@ -12,7 +12,7 @@ class User(Base):
     """user class inherits from Base"""
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True, nullable=False)
-    email = Column(VARCHAR(250), nullable=False)
-    hashed_password = Column(VARCHAR(250), nullable=False)
+    email = Column(String(250), nullable=False)
+    hashed_password = Column(String(250), nullable=False)
     session_id = Column(VARCHAR(250), nullable=True)
     reset_token = Column(VARCHAR(250), nullable=True)
