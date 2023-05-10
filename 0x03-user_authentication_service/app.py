@@ -29,7 +29,7 @@ def addusers() -> str:
         return jsonify({"message": "email already registered"}), 400
 
 
-@app.route('/sesssions', methods=['POST'], strict_slashes=False)
+@app.route('/sessions', methods=['POST'], strict_slashes=False)
 def login() -> str:
     """ create session id if correct email and password"""
     user_info = {
