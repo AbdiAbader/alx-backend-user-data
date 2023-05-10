@@ -90,9 +90,10 @@ def update_password() -> str:
     }
     try:
         res = AUTH._db.find_user_by(email=user_info['reset_token'])
-        AUTH.update_password(res.id, user_info['reset_token'],
+        AUTH.update_password(user_info['reset_token'],
                              user_info['new_password'])
-        return jsonify({"email": res.email, "message": "Password updated"}), 200
+        return jsonify({"email": res.email, "message":
+                        "Password updated"}), 200
     except Exception:
         abort(403)
 
