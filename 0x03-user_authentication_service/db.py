@@ -52,15 +52,15 @@ class DB:
         except TypeError:
             raise InvalidRequestError
 
-    def update_user(self, user_id: int, **kwargs):
+    def update_user(self, user_id: int, **kwargs) -> None:
         """update the database
         """
-        try:
-            res = self.find_user_by(id=user_id)
-            if not res:
-                raise NoResultFound
-            for key, value in kwargs.items():
+        res = self.find_user_by(id=user_id)
+        if not res:
+            raise NoResultFound
+        for key, value in kwargs.items():
+            if hasattr(res, key):
                 setattr(res, key, value)
-            self._session.commit()
-        except TypeError:
-            raise ValueError
+            else:
+                raise ValueError
+        self._session.commit()
