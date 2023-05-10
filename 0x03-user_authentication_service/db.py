@@ -39,4 +39,13 @@ class DB:
         self._session.add(newUser)
         self._session.commit()
         return newUser
-
+    
+    def find_user_by(self, **kwargs) -> User:
+        """method that return the first row found in the users table
+        """
+        try:
+            return self._session.query(User).filter_by(**kwargs).first()
+        except InvalidRequestError:
+            raise InvalidRequestError
+        except NoResultFound:
+            raise NoResultFound
