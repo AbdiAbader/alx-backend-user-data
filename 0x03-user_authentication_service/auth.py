@@ -7,6 +7,9 @@ from user import User
 from sqlalchemy.orm.exc import NoResultFound
 import uuid
 
+def _generate_uuid() -> str:
+        """generate uuid"""
+        return str(uuid.uuid4())
 
 def _hash_password(password: str) -> str:
     """return hashed password
@@ -40,7 +43,3 @@ class Auth:
                                   res.hashed_password)
         except NoResultFound:
             return False
-    
-    def _generate_uuid(self) -> str:
-        """generate uuid"""
-        return str(uuid.uuid4())
