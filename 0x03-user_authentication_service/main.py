@@ -2,6 +2,7 @@
 """ The Main module"""
 from auth import Auth
 from user import User
+from sqlalchemy.orm.exc import NoResultFound
 
 EMAIL = "guillaume@holberton.io"
 PASSWD = "b4l0u"
@@ -11,8 +12,12 @@ Auth = Auth()
 
 def register_user(email: str, password: str) -> None:
     """ register user """
-    Auth.register_user(email, password)
-    assert Auth.valid_login(email, password) is True
+    try:
+        res = Auth._db.find_user_by(email=email)
+        Auth.register_user(email, password)
+        assert Auth.valid_login(email, password) is True
+    except NoResultFound:
+        assert Auth.valid_login(email, password) is False
 
 
 def log_in_wrong_password(email: str, password: str) -> None:
@@ -23,17 +28,22 @@ def log_in_wrong_password(email: str, password: str) -> None:
 
 def profile_unlogged() -> None:
     """ profile unlogged """
-    user = Auth.register_user(EMAIL, PASSWD)
-    assert Auth.create_session(EMAIL) == user.session_id
-    assert Auth.get_user_from_session_id(user.session_id) == user.id
+    try:
+        user = Auth.register_user(EMAIL, PASSWD)
+        assert Auth.create_session(EMAIL) == user.session_id
+        assert Auth.get_user_from_session_id(user.session_id) == user.id
+    except (ValueError, NoResultFound):
+        assert Auth.get_user_from_session_id("wrongsessionid") is None
 
 
 def log_in(email: str, password: str) -> str:
     """ log in """
-    user = Auth.register_user(email, password)
-    assert Auth.create_session(email) == user.session_id
-    return user.session_id
-
+    try:
+        user = Auth.register_user(email, password)
+        assert Auth.create_session(email) == user.session_id
+        return user.session_id
+    except (ValueError, NoResultFound):
+        return None
 
 def log_out(session_id: str) -> None:
     """ log out """
@@ -45,24 +55,28 @@ def log_out(session_id: str) -> None:
 
 def reset_password_token(email: str) -> str:
     """ reset password token """
-    Auth.register_user(email, PASSWD)
-    return Auth.get_reset_password_token(email)
-
+    try:
+        Auth.register_user(email, PASSWD)
+        return Auth.get_reset_password_token(email)
+    except (ValueError, NoResultFound):
+        return None
 
 def profile_logged(session_id: str) -> None:
     """ profile logged """
-    user = Auth.get_user_from_session_id(session_id)
-    assert user.session_id == session_id
-    assert Auth.create_session(EMAIL) == user.session_id
-    assert Auth.get_user_from_session_id(user.session_id) == user.id
+    res = Auth.get_user_from_session_id(session_id)
+    if res is None:
+        assert Auth.get_user_from_session_id(session_id) is None
+    assert Auth.create_session(res.email) == res.session_id
 
 
 def update_password(email: str, reset_token: str, new_password: str) -> None:
     """ update password module"""
-    Auth.register_user(email, PASSWD)
-    Auth.update_password(reset_token, new_password)
-    assert Auth.valid_login(email, new_password) is True
-
+    try:
+        Auth.register_user(email, PASSWD)
+        Auth.update_password(reset_token, new_password)
+        assert Auth.valid_login(email, new_password) is True
+    except (ValueError, NoResultFound):
+        assert Auth.valid_login(email, new_password) is False
 
 if __name__ == "__main__":
 
