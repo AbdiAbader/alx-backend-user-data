@@ -5,7 +5,8 @@ import bcrypt
 from db import DB
 from user import User
 
-def _hash_password(password: str) ->str:
+
+def _hash_password(password: str) -> str:
     """return hashed password
     """
     if password is None:
@@ -19,11 +20,12 @@ class Auth:
 
     def __init__(self):
         self._db = DB()
-    
+
     def register_user(self, email: str, password: str) -> User:
         """register user
         """
         if self._db.find_user_by(email=email):
             raise ValueError(f"User {email} already exists")
-        return self._db.add_user(email, _hash_password(password))
-        
+        self._db.add_user(email, _hash_password(password))
+        self._db.commit()
+        return self._db.find_user_by(email=email)
