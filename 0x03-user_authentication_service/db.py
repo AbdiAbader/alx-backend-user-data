@@ -36,6 +36,8 @@ class DB:
         """method that return a new user
         """
         newUser = User(email=email, hashed_password=hashed_password)
-        self._session.add(newUser)
-        self._session.commit()
-        return newUser
+        if newUser:
+            self._session.add(newUser)
+            self._session.commit()
+            return newUser
+        return None
