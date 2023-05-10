@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 """Auth Module for user service"""
 
-import bcrypt
+from bcrypt import hashpw, gensalt
 
 
-def _hash_password(passw: str) -> str:
-    """return hashed password
+def _hash_password(password: str) -> str:
+    """ Takes in string arg, converts to unicode
+    Returns salted, hashed pswd as bytestring
     """
-    if passw is None:
-        return
-    return bcrypt.hashpw(passw.encode('utf-8'), bcrypt.gensalt())
+    return hashpw(password.encode('utf-8'), gensalt())
