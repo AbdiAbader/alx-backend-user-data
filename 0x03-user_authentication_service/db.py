@@ -40,7 +40,7 @@ class DB:
         self._session.commit()
         return newUser
 
-    def find_user_by(self, **kwargs: dict) -> User:
+    def find_user_by(self, **kwargs):
         """method that return the first row found
         in the users table
         """
