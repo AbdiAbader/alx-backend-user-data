@@ -4,10 +4,9 @@
 import bcrypt
 
 
-def _hash_password(passw: str) ->str:
-    """return hashed password using bcrypt
-    and utf-8 encoding
+def _hash_password(password: str) ->str:
+    """return hashed password
     """
-    if passw is None:
+    if password is None:
         return
-    return bcrypt.hashpw(passw.encode('utf-8'), bcrypt.gensalt())
+    return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
