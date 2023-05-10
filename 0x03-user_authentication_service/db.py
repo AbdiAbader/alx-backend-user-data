@@ -52,7 +52,7 @@ class DB:
         except TypeError:
             raise InvalidRequestError
 
-    def update_user(self, user_id: int, **kwargs) -> None:
+    def update_user(self, user_id: int, **kwargs):
         """update the database
         """
         try:
